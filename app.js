@@ -6,6 +6,7 @@ const path = require('path')
 const artTemplate = require('express-art-template')
 const logger = require('morgan')
 const favicon = require('express-favicon')
+const bodyParser =  require('body-parser')
 
 const router = require('./routers')
 const middleware = require('./middleware')
@@ -21,8 +22,8 @@ app.use(logger('dev'))
 //静态资源
 app.use('/', express.static(path.join(__dirname, 'public')))
 //请求体数据解析
-app.use(express.json())
-app.use(express.urlencoded({extended: false}))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
 //会话处理
 
 //模版引擎
