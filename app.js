@@ -29,6 +29,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 //模版引擎
 app.engine('art', artTemplate)
 app.set('view options', {
+  //调试模式  模版不会缓存  页面不会压缩
   debug: process.env.NODE_ENV !== 'production'
 })
 //网站小图标
