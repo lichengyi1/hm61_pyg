@@ -14,6 +14,8 @@ router.get('/like', home.like)
 // url /list?id=100  req.query.id
 // url /list/100     req.params.id
 router.get('/list/:id(\\d+)',list.index)
+router.get('/search',list.search)
+
 
 //登录
 router.get('/login', account.login)

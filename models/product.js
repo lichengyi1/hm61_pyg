@@ -24,3 +24,12 @@ exports.getCateProducts = (cateId, page, size, sort) => {
     return {list:res.data,total:res.headers['x-total-pages']}
   }).catch(err => Promise.reject(err))
 }
+
+//获取某个关键字下的产品
+exports.getSearchProducts = (q, page, size, sort) => {
+  const url = `products?page=${page}&per_page=${size}&sort=${sort}&q=${q}`
+  return axios.get(url).then(res => {
+    //注意：这个接口的响应头中 x-total-pages 的属性  存储的是总条数数据
+    return {list:res.data,total:res.headers['x-total-pages']}
+  }).catch(err => Promise.reject(err))
+}
