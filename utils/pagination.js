@@ -10,6 +10,10 @@ module.exports = (options) => {
   //渲染这个分类需要：总页数 total 当前页 page  显示按钮个数 count
   //点击按钮后跳转的链接问题
   const total = options.total
+
+  //total总页数
+  if (total < 2) return ''
+
   const page = options.page
   const count = options.count || 5
   const req = options.req

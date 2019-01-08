@@ -6,8 +6,12 @@ const path = require('path')
 const artTemplate = require('express-art-template')
 const logger = require('morgan')
 const favicon = require('express-favicon')
-const bodyParser =  require('body-parser')
+const bodyParser = require('body-parser')
+const session = require('express-session')
+const mysqlSession = require('express-mysql-session')
+const cookieParser = require('cookie-parser')
 
+const config = require('./config')
 const router = require('./routers')
 const middleware = require('./middleware')
 
@@ -24,7 +28,20 @@ app.use('/', express.static(path.join(__dirname, 'public')))
 //请求体数据解析
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
+//配置cookie出来中间件
+app.use(cookieParser())
 //会话处理
+//1. 只是出来会话  express-session
+//2. 会话持久化  express-mysql-session
+const MySqlStore = mysqlSession(session)
+const sessionStore = new MySqlStore(config.mysql)
+app.use(session({
+  key: 'PYGSID',
+  secret: 'pyg_secret',
+  store: sessionStore,
+  resave: false,
+  saveUninitialized: false
+}))
 
 //模版引擎
 app.engine('art', artTemplate)

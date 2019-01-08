@@ -97,6 +97,7 @@
                 </div>
             </div>
             <div class="goods-list">
+                {{if list.length}}
                 <ul class="yui3-g">
                     {{each list item i}}
                     <li class="yui3-u-1-5">
@@ -112,6 +113,9 @@
                     </li>
                     {{/each}}
                 </ul>
+                {{else}}
+                <p style="font-size: 20px;line-height: 10">没找到您需要的商品！</p>
+                {{/if}}
             </div>
             <!--渲染分页-->
             {{@pagination}}

@@ -21,15 +21,21 @@ exports.getCateProducts = (cateId, page, size, sort) => {
   const url = `/categories/${cateId}/products?page=${page}&per_page=${size}&sort=${sort}`
   return axios.get(url).then(res => {
     //注意：这个接口的响应头中 x-total-pages 的属性  存储的是总条数数据
-    return {list:res.data,total:res.headers['x-total-pages']}
+    return {list: res.data, total: res.headers['x-total-pages']}
   }).catch(err => Promise.reject(err))
 }
 
-//获取某个关键字下的产品
+//获取某个关键字下的产品  中文字 特殊字符 都会处理成URL编码
 exports.getSearchProducts = (q, page, size, sort) => {
   const url = `products?page=${page}&per_page=${size}&sort=${sort}&q=${q}`
   return axios.get(url).then(res => {
     //注意：这个接口的响应头中 x-total-pages 的属性  存储的是总条数数据
-    return {list:res.data,total:res.headers['x-total-pages']}
+    return {list: res.data, total: res.headers['x-total-pages']}
   }).catch(err => Promise.reject(err))
+}
+
+//获取商品的详情信息
+exports.getProduct = (id, isBasic) => {
+  return axios.get(`products/${id}` + (isBasic ? '' : '?include=introduce,category,pictures'))
+    .then(res => res.data).catch(err => Promise.reject(err))
 }

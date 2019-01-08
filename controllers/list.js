@@ -1,6 +1,7 @@
 const productModel = require('../models/product')
 const categoryModel = require('../models/category')
 const pagination = require('../utils/pagination')
+const qs = require('querystring')
 //分类商品列表
 exports.index = (req, res, next) => {
   //获取分类ID  ==> '/list/:id'
@@ -43,7 +44,9 @@ exports.search = (req, res, next) => {
   const page = req.query.page || 1
   const sort = req.query.sort || 'commend'
   const size = 5
-  productModel.getSearchProducts(q, page, size, sort)
+  //转URL编码 encodeURIComponent(q) 浏览器端拥有的但NODEJS也可以使用
+  //转URL编码 querystring.escape(str)
+  productModel.getSearchProducts(qs.escape(q), page, size, sort)
     .then(data => {
       res.locals.list = data.list
       res.locals.sort = sort

@@ -9,10 +9,25 @@ const site = {
 
 //接口公用配置
 const api = {
-  //baseURL:'http://localhost:8000/v1/',
-  baseURL:'https://ns-api.uieee.com/v1/',
-  username:'newshop-frontend',
-  password:'d8667837fce5a0270a35f4a8fa14be479fadc774'
+  baseURL: 'http://localhost:8000/v1/',
+  //baseURL:'https://ns-api.uieee.com/v1/',
+  username: 'newshop-frontend',
+  password: 'd8667837fce5a0270a35f4a8fa14be479fadc774'
 }
 
-module.exports = {site,api}
+//维护链接MYSQL的信息
+const mysql = {
+  host: 'localhost',
+  port: 3306,
+  user: 'root',
+  password: '123456',
+  database: 'newshop' //创建表 sessions
+}
+
+//定义cookie相关配置
+const cookie = {
+  cart_key: 'pyg_cart_key',
+  cart_expires: 30 * 24 * 60 * 60 * 1000
+}
+
+module.exports = {site, api, mysql, cookie}

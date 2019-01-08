@@ -41,7 +41,7 @@
                         <div class="search">
                             <form action="/search" class="sui-form form-inline" autocomplete="off">
                                 <div class="input-append">
-                                    <input type="text" name="q" id="autocomplete" class="input-error input-xxlarge">
+                                    <input type="text" name="q" value="{{q}}" id="autocomplete" class="input-error input-xxlarge">
                                     <button class="sui-btn btn-xlarge btn-danger">搜索</button>
                                 </div>
                             </form>
