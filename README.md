@@ -57,7 +57,24 @@ c 控制器 （路由）
 // 生成环境  404 500 页面
 // 开发环境  响应详细的错误信息  使用 youch 的错误信息页面生成组件
 
-##### 
+##### cookie的使用
+```javascript
+//nodejs cookie-parser 提供
+//1. 获取cookie
+const cookies = request.cookies  //获取客户端所有cookie信息
+const cart = request.cookies['cart_key']
+//2. 设置
+response.cookie(key,value,expires)
+//3. 清除
+response.clearCookie(key)
+```
+
+```javascript
+//在客户端操作cookie
+document.cookie //获取
+document.cookie = "username=xpp" //默认没有有效期
+document.cookie = "username=xpp;Expires="+ new Date('2100-01-01') //设置带有效期的
+```
 
 
 

@@ -6,6 +6,7 @@ const account = require('./controllers/account')
 const list = require('./controllers/list')
 const item = require('./controllers/item')
 const cart = require('./controllers/cart')
+const member = require('./controllers/member')
 
 //首页展示
 router.get('/', home.index)
@@ -28,6 +29,9 @@ router.post('/cart/edit', cart.edit)  //编辑
 router.post('/cart/remove', cart.remove) //删除
 
 //登录
-router.get('/login', account.login)
+router.get('/login', account.index)  //页面
+router.post('/login', account.login) //登录逻辑
+
+router.get('/member', member.index)
 
 module.exports = router

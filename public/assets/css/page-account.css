@@ -6,6 +6,9 @@
 	height: 550px;
 	background-color: #7e00ff;
 	margin-top: -2px;
+	background-image: url("../img/loginbg.png");
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 .copyright {

@@ -6,7 +6,11 @@ const categoryModel = require('./models/category')
 exports.base = (req, res, next) => {
   //1. 设置头部信息
   res.locals.site = config.site
-  //2. 分类信息  获取树状的数据结构
+  //2. 设置用户信息
+  if(req.session.user){
+    res.locals.user = req.session.user
+  }
+  //3. 分类信息  获取树状的数据结构
   //如果已经缓存了
   //req.app.locals 应用对象存数据的对象locals
   //res.locals 响应报文对象存储数据的对象locals

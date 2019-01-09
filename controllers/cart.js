@@ -1,5 +1,6 @@
 const config = require('../config')
 const productModel = require('../models/product')
+const cartModel = require('../models/cart')
 //购物车路由中间件
 exports.add = (req, res, next) => {
   //1. 判断是否登录  会把登录后用户信息存在session  user属性指定就是用户信息
@@ -56,7 +57,12 @@ exports.index = (req, res, next) => {
 /*查询列表  响应json*/
 exports.list = (req, res, next) => {
   if (req.session.user) {
-    //TODO 登录状态查询购物车列表信息
+    //登录状态查询购物车列表信息
+    cartModel.find(req.session.user.id).then(data=>{
+      res.json({list:data})
+    }).catch(err=>{
+      res.json([])
+    })
   } else {
     //未登录状态的查询购物车列表信息
     /*1. 获取cookie信息*/
@@ -85,6 +91,41 @@ exports.list = (req, res, next) => {
   }
 }
 /*编辑*/
-exports.edit = (req, res, next) => {}
+exports.edit = (req, res, next) => {
+  const {id, amount} = req.body
+  if (req.session.user) {
+    //TODO 登录后的编辑
+  } else {
+    //未登录时的编辑
+    /*1. 获取cookie数据*/
+    const cookieStr = req.cookies[config.cookie.cart_key] || '[]'
+    /*2. 转换成数组*/
+    const cartList = JSON.parse(cookieStr)
+    /*3. 根据商品的ID 找到你要修改的商品数据*/
+    const cart = cartList.find(item => item.id == id)
+    cart.amount = amount
+    /*4. 更新客户端cookie数据*/
+    const expires = new Date(Date.now() + config.cookie.cart_expires)
+    res.cookie(config.cookie.cart_key, JSON.stringify(cartList), {expires})
+    /*5. 响应客户端 是否操作成功*/
+    res.json({success: true})
+  }
+}
 /*删除*/
-exports.remove = (req, res, next) => {}
+exports.remove = (req, res, next) => {
+  const {id} = req.body
+  if (req.session.user) {
+    //TODO 登录后的删除
+  } else {
+    //未登录时的删除
+    const cookieStr = req.cookies[config.cookie.cart_key] || '[]'
+    const cartList = JSON.parse(cookieStr)
+    //根据索引删除 splice(index,1) 删除
+    const index = cartList.findIndex(item => item.id == id)
+    cartList.splice(index, 1)
+    //更新
+    const expires = new Date(Date.now() + config.cookie.cart_expires)
+    res.cookie(config.cookie.cart_key, JSON.stringify(cartList), {expires})
+    res.json({success: true})
+  }
+}
